@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>代謝收案條件計算</title>
+        <base target="_top">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+
+        <script>
+            function makeChange() {
+                tablestyle = document.getElementById("infotable1");
+                if(tablestyle.style.display === 'none'){
+                    tablestyle.style.display = '';
+                }else{
+                    tablestyle.style.display = 'none';
+                }
+            }
+
+            function cal_BMI() {
+                height = document.getElementById("height").value;
+                weight = document.getElementById("weight").value;
+                //計算公式：體重(公斤) / 身高(公尺)的平方
+                var cal = weight / ((height / 100) ** 2);
+                document.getElementById("BMI").value = cal.toFixed(2);
+            }
+
+            function cal_HDL() {
+                TC = document.getElementById("TC").value; //總膽固醇
+                LDL = document.getElementById("LDL").value; //低密度膽固醇
+                TG = document.getElementById("TG").value; //三酸甘油脂
+                //計算公式：總膽固醇 - 低密度膽固醇 - (三酸甘油脂/5) = 高密度膽固醇
+                var cal = TC - LDL - (TG/5);
+                document.getElementById("HDL").value = cal.toFixed(2);
+            }
+
+            function CE_1(){
+                //判斷腰圍，男性大於等於90公分、女性大於等於80公分
+                //判斷BMI大於等於27
+                gender = document.getElementById("gender").value;
+                console.log(gender);
+                waistline = document.getElementById("waistline").value;
+                BMI = document.getElementById("BMI").value;
+                console.log(waistline);
+                if (gender == "male"){
+                    console.log("男性");
+                    if (waistline >= 90){
+                        console.log("大於90");
+                        return true;
+                    }
+                }
+                if (gender == "female"){
+                    if (waistline >= 80){
+                        return true;
+                    }
+                }
+
+                if (BMI >= 27){
+                    return true;
+                }
+            }
+
+            function CE_2(){
+                //判斷血壓，收縮壓大於等於130mmHg或舒張壓大於等於85mmHg，或降血壓藥物為有
+                SBP = document.getElementById("SBP").value;
+                DBP = document.getElementById("DBP").value;
+                drug = document.getElementById("Anti-hypertensives").value;
+
+                if (SBP >= 130){ return true;}
+                if (DBP >= 85){ return true;}
+                if (drug == "true"){ return true;}
+            }
+
+            function CE_3(){
+                //判斷飯前血糖值大於等於100mg/dL，或降血糖藥物為有
+                GLUAC = document.getElementById("GLU-AC").value;
+                drug = document.getElementById("Anti-hypoglycemic").value;
+
+                if (GLUAC >= 100){ return true;}
+                if (drug == "true"){ return true;}
+            }
+
+            function CE_4(){
+                //判斷三酸甘油脂大於等於150mg/dL，或降血脂藥物為有
+                TG = document.getElementById("TG").value;
+                drug = document.getElementById("Anti-hypolipidemi").value;
+
+                if (TG >= 150){ return true;}
+                if (drug == "true"){ return true;}
+            }
+
+            function CE_5(){
+                //判斷高密度膽固醇：男性小於40mg/dL、女性小於50mg/dL，或降血脂藥物為有
+                gender = document.getElementById("gender").value;
+                HDL = document.getElementById("HDL").value;
+                drug = document.getElementById("Anti-hypolipidemi").value;
+                //console.log(HDL);
+                if (gender == "male"){
+                    if (HDL < 40){
+                        return true;
+                    }
+                }
+                if (gender == "female"){
+                    if (HDL < 50){
+                        return true;
+                    }
+                }
+
+                if (drug == "true"){ return true;}
+            }
+
+            function CE_6(){
+                //符合糖尿病前期定義：糖化血色素：5.7~6.4%
+                HbA1c = document.getElementById("HbA1c").value;
+
+                if (HbA1c >= 5.7 && HbA1c <= 6.4){
+                    return true;
+                }
+            }
+
+            function CE_total(){
+                var cal_total = 0;
+                if(CE_1()){ cal_total += 1; console.log("CE_1");}
+                if(CE_2()){ cal_total += 1; console.log("CE_2");}
+                if(CE_3()){ cal_total += 1; console.log("CE_3");}
+                if(CE_4()){ cal_total += 1; console.log("CE_4");}
+                if(CE_5()){ cal_total += 1; console.log("CE_5");}
+
+                if(cal_total >= 3 || CE_6()==true){
+                    alert("符合收案條件");
+                }else{
+                    alert("不符合收案條件");
+                }
+            }
+
+
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12"> 
+                    <p class="h3 text-center"><b><a onclick="reLoad()">代謝收案條件試算</a></b></p>
+                    <hr>
+                    <button type="button" class="btn btn-light btn-sm" onclick="makeChange()"><b>收案條件</b></button>
+                    <table class="table   table-hover table-sm" id="infotable1" name="infotable1" style="font-size:1em; display:'';">
+                        <tr>
+                            <td>1.符合下列代謝症候群指標三項：</td>
+                        </tr>
+                        <tr>
+                            <td>&emsp;(1)腰圍：男性&ge;90公分、女性&ge;80公分或BMI&ge;27。</td>
+                        </tr>
+                        <tr>
+                            <td>&emsp;(2)收縮壓&ge;130mmHg或舒張壓&ge;85mmHg，或降血壓藥物為有。</td>
+                        </tr>
+                        <tr>
+                            <td>&emsp;(3)飯前血糖值&ge;100mg/dL，或降血糖藥物為有。</td>
+                        </tr>
+                        <tr>
+                            <td>&emsp;(4)三酸甘油脂&ge;150mg/dL，或降血脂藥物為有。</td>
+                        </tr>
+                        <tr>
+                            <td>&emsp;(5)高密度膽固醇：男性&lt;40mg/dL、女性&lt;50mg/dL，或降血脂藥物為有。</td>
+                        </tr>
+                        <tr>
+                            <td>2.符合糖尿病前期定義：糖化血色素：5.7~6.4%</td>
+                        </tr>
+                    </table>
+
+                    <form id="myForm" class="p-2 border border-light rounded bg-light" onsubmit="CE_total()"> <!-- Call JavaScript function "handleFormSubmit" -->
+                    <div id="message"></div>
+                    <input type="text" id="RecId" name="RecId" value="" style="display: none">
+                
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label for="gender" style="color:red;">性別</label>
+                            <br>
+                            <select class="form-control" id="gender" name="gender" required>
+                                <option value="male" selected="selected">男</option>
+                                <option value="female">女</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="height" style="color:red;">身高 (cm)</label>
+                            <input type="number" class="form-control" min="0" id="height" name="height" autocomplete="off" required onchange="cal_BMI()">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="weight" style="color:red;">體重 (kg)</label>
+                            <input type="number" class="form-control" min="0" id="weight" name="weight" autocomplete="off" required onchange="cal_BMI()">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="BMI">BMI (kg/m2)</label>
+                            <input type="number" class="form-control" min="0" id="BMI" name="BMI" disabled="disabled">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="waistline" style="color:red;">腰圍 (cm)</label>
+                            <input type="number" class="form-control" min="0" id="waistline" name="waistline" autocomplete="off" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label for="SBP" style="color:red;">收縮壓 (mmHg)</label>
+                            <input type="number" class="form-control" min="0" id="SBP" name="SBP" autocomplete="off" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="DBP" style="color:red;">舒張壓 (mmHg)</label>
+                            <input type="number" class="form-control" min="0" id="DBP" name="DBP" autocomplete="off" required>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="Anti-hypertensives" style="color:red;">降血壓藥物</label>
+                            <select class="form-control" id="Anti-hypertensives" name="Anti-hypertensives" required>
+                                <option value="true">有</option>
+                                <option value="false" selected="selected">無</option>
+                            </select>
+
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="GLU-AC">飯前血糖值 (mg/dl)</label>
+                            <input type="number" class="form-control" id="GLU-AC" name="GLU-AC" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="Anti-hypoglycemic" style="color:red;">降血糖藥物</label>
+                            <select class="form-control" id="Anti-hypoglycemic" name="Anti-hypoglycemic" required>
+                                <option value="true">有</option>
+                                <option value="false" selected="selected">無</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <label for="TG">三酸甘油脂 (mg/dl)</label>
+                            <input type="number" class="form-control" min="0" id="TG" name="TG" autocomplete="off" onchange="cal_HDL()">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="Anti-hypolipidemi" style="color:red;">降血脂藥物</label>
+                            <select class="form-control" id="Anti-hypolipidemi" name="Anti-hypolipidemi" required>
+                                <option value="true">有</option>
+                                <option value="false" selected="selected">無</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group col-md-2">
+                            <label for="TC">總膽固醇 (mg/dl)</label>
+                            <input type="number" class="form-control" min="0" id="TC" name="TC" autocomplete="off" onchange="cal_HDL()">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="LDL">低密度膽固醇 (mg/dl)</label>
+                            <input type="number" class="form-control" min="0" id="LDL" name="LDL" autocomplete="off" onchange="cal_HDL()">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="HDL">高密度膽固醇 (mg/dl)</label>
+                            <input type="number" class="form-control" id="HDL" name="HDL" autocomplete="off" disabled="disabled">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="HbA1c">醣化血色素 (%)</label>
+                            <input type="number" class="form-control" min="0" step="0.01" id="HbA1c" name="HbA1c" autocomplete="off">
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary">計算_不保留數據</button>
+                    &emsp;&emsp;
+                    <input class="btn btn-secondary" type="reset" value="清除">
+                    &emsp;&emsp;
+                    </form>
+                    &emsp;<button class="btn btn-primary" onclick="CE_total()">計算_保留數據</button>
+                    &emsp;&emsp;&ensp;
+                    <button class="btn btn-secondary"><a style="color:white;" href="https://cdrc.hpa.gov.tw/hra-openservice-menupage.jsp?all"  target="_blank">國民健康署慢性疾病風險評估平台</a></button>
+                </div>
+
+                <div class="col-12 justify-content-center">
+                    <!--輸出結果-->
+                    <br><br>
+                    
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
