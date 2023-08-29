@@ -34,6 +34,8 @@
                 document.getElementById("HDL").value = cal.toFixed(2);
             }
 
+            var message = "";
+
             function CE_1(){
                 //判斷腰圍，男性大於等於90公分、女性大於等於80公分
                 //判斷BMI大於等於27
@@ -41,21 +43,24 @@
                 console.log(gender);
                 waistline = document.getElementById("waistline").value;
                 BMI = document.getElementById("BMI").value;
-                console.log(waistline);
+                //console.log(waistline);
                 if (gender == "male"){
                     console.log("男性");
                     if (waistline >= 90){
-                        console.log("大於90");
+                        //console.log("大於90");
+                        message += "(1)男性腰圍大於等於90公分\n";
                         return true;
                     }
                 }
                 if (gender == "female"){
                     if (waistline >= 80){
+                        message += "(1)女性腰圍大於等於80公分\n";
                         return true;
                     }
                 }
 
                 if (BMI >= 27){
+                    message += "(1)BMI大於等於27\n";
                     return true;
                 }
             }
@@ -66,9 +71,9 @@
                 DBP = document.getElementById("DBP").value;
                 drug = document.getElementById("Anti-hypertensives").value;
 
-                if (SBP >= 130){ return true;}
-                if (DBP >= 85){ return true;}
-                if (drug == "true"){ return true;}
+                if (SBP >= 130){ message += "(2)收縮壓大於等於130mmHg\n";  return true; }
+                if (DBP >= 85){ message += "(2)舒張壓大於等於85mmHg\n";  return true; }
+                if (drug == "true"){ message += "(2)降血壓藥物\n";  return true; }
             }
 
             function CE_3(){
@@ -76,8 +81,8 @@
                 GLUAC = document.getElementById("GLU-AC").value;
                 drug = document.getElementById("Anti-hypoglycemic").value;
 
-                if (GLUAC >= 100){ return true;}
-                if (drug == "true"){ return true;}
+                if (GLUAC >= 100){ message += "(3)飯前血糖值大於等於100mg/dL\n";  return true; }
+                if (drug == "true"){ message += "(3)降血糖藥物\n"; return true; }
             }
 
             function CE_4(){
@@ -85,8 +90,8 @@
                 TG = document.getElementById("TG").value;
                 drug = document.getElementById("Anti-hypolipidemi").value;
 
-                if (TG >= 150){ return true;}
-                if (drug == "true"){ return true;}
+                if (TG >= 150){ message += "(4)三酸甘油脂大於等於150mg/dL\n";  return true; }
+                if (drug == "true"){ message += "(4)降血脂藥物\n";  return true; }
             }
 
             function CE_5(){
@@ -97,16 +102,18 @@
                 //console.log(HDL);
                 if (gender == "male"){
                     if (HDL < 40){
+                        message += "(5)男性高密度膽固醇小於40mg/dL\n";
                         return true;
                     }
                 }
                 if (gender == "female"){
                     if (HDL < 50){
+                        message += "(5)女性高密度膽固醇小於50mg/dL\n";
                         return true;
                     }
                 }
 
-                if (drug == "true"){ return true;}
+                if (drug == "true"){ message += "(5)降血脂藥物\n";  return true; }
             }
 
             function CE_6(){
@@ -114,26 +121,32 @@
                 HbA1c = document.getElementById("HbA1c").value;
 
                 if (HbA1c >= 5.7 && HbA1c <= 6.4){
+                    message += "糖尿病前期定義：糖化血色素：5.7~6.4%\n";
                     return true;
                 }
             }
 
             function CE_total(){
                 var cal_total = 0;
+
                 if(CE_1()){ cal_total += 1; console.log("CE_1");}
                 if(CE_2()){ cal_total += 1; console.log("CE_2");}
                 if(CE_3()){ cal_total += 1; console.log("CE_3");}
                 if(CE_4()){ cal_total += 1; console.log("CE_4");}
                 if(CE_5()){ cal_total += 1; console.log("CE_5");}
 
-                if(cal_total >= 3 || CE_6()==true){
-                    alert("符合收案條件");
-                }else{
-                    alert("不符合收案條件");
+                if(cal_total >= 3){
+                    alert("符合收案條件：共" + cal_total +"項\n" + message);
+                    //document.getElementById("output").innerHTML = "";
+                    //document.getElementById("output").innerHTML = message;
+                }else if(CE_6()){
+                    alert("符合收案條件：糖尿病前期定義\n" + message);
                 }
+                else{
+                    alert("不符合收案條件！\n" + message);
+                }
+                message = "";
             }
-
-
         </script>
     </head>
 
@@ -255,25 +268,26 @@
                             <input type="number" class="form-control" id="HDL" name="HDL" autocomplete="off" disabled="disabled">
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="HbA1c">醣化血色素 (%)</label>
+                            <label for="HbA1c">糖化血色素 (%)</label>
                             <input type="number" class="form-control" min="0" step="0.01" id="HbA1c" name="HbA1c" autocomplete="off">
                         </div>
                     </div>
 
-                    <button class="btn btn-primary">計算_不保留數據</button>
+                    <button class="btn btn-primary">試算_不保留數據</button>
                     &emsp;&emsp;
                     <input class="btn btn-secondary" type="reset" value="清除">
                     &emsp;&emsp;
                     </form>
-                    &emsp;<button class="btn btn-primary" onclick="CE_total()">計算_保留數據</button>
+                    &emsp;<button class="btn btn-primary" onclick="CE_total()">試算_保留數據</button>
                     &emsp;&emsp;&ensp;
                     <button class="btn btn-secondary"><a style="color:white;" href="https://cdrc.hpa.gov.tw/hra-openservice-menupage.jsp?all"  target="_blank">國民健康署慢性疾病風險評估平台</a></button>
                 </div>
 
-                <div class="col-12 justify-content-center">
-                    <!--輸出結果-->
-                    <br><br>
-                    
+                <div class="form-row">
+                    <div class="form-group col-md-12">
+                        <div id="output" style="white-space: pre-line"></div>
+                        <br><br>
+                    </div>
                 </div>
             </div>
         </div>
