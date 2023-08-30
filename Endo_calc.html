@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>代謝收案條件試算</title>
+        <title>代謝症候群防治計畫收案條件試算</title>
         <base target="_top">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
-        
+        <meta name="description" content="全民健康保險代謝症候群防治計畫收案條件試算">
+        <meta name="author" content="Jacky Chung">
         <script>
             function makeChange() {
                 tablestyle = document.getElementById("infotable1");
@@ -121,7 +122,7 @@
                 HbA1c = document.getElementById("HbA1c").value;
 
                 if (HbA1c >= 5.7 && HbA1c <= 6.4){
-                    message += "糖尿病前期定義：糖化血色素：5.7~6.4%\n";
+                    message += "糖化血色素：5.7~6.4%\n";
                     return true;
                 }
             }
@@ -136,7 +137,7 @@
                 if(CE_5()){ cal_total += 1; console.log("CE_5");}
 
                 if(cal_total >= 3){
-                    alert("符合收案條件：共" + cal_total +"項\n" + message);
+                    alert("符合收案條件：符合代謝症候群指標共" + cal_total +"項\n" + message);
                     //document.getElementById("output").innerHTML = "";
                     //document.getElementById("output").innerHTML = message;
                 }else if(CE_6()){
@@ -154,7 +155,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-12"> 
-                    <p class="h3 text-center"><b><a onclick="reLoad()">代謝收案條件試算</a></b></p>
+                    <p class="h3 text-center"><b><a onclick="reLoad()">代謝症候群防治計畫收案條件試算</a></b></p>
                     <hr>
                     <button type="button" class="btn btn-light btn-sm" onclick="makeChange()"><b>收案條件</b></button>
                     <table class="table   table-hover table-sm" id="infotable1" name="infotable1" style="font-size:1em; display:'';">
@@ -278,7 +279,7 @@
                     <input class="btn btn-secondary" type="reset" value="清除">
                     &emsp;&emsp;
                     </form>
-                    &emsp;<button class="btn btn-primary" onclick="CE_total()">試算_保留數據</button>
+                    &emsp;<button class="btn btn-success" onclick="CE_total()">試算_保留數據</button>
                     &emsp;&emsp;&ensp;
                     <button class="btn btn-secondary"><a style="color:white;" href="https://cdrc.hpa.gov.tw/hra-openservice-menupage.jsp?all"  target="_blank">國民健康署慢性疾病風險評估平台</a></button>
                 </div>
