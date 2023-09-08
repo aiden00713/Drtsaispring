@@ -18,6 +18,13 @@
                 }
             }
 
+            function makeChange2() {
+                divstyle = document.getElementById("div_target");
+                if(divstyle.style.display === 'none'){
+                    divstyle.style.display = '';
+                }
+            }
+
             function cal_BMI() {
                 height = document.getElementById("height").value;
                 weight = document.getElementById("weight").value;
@@ -148,6 +155,121 @@
                 }
                 message = "";
             }
+
+            function waistline_target(){
+                //腰圍目標值
+                //男性如果大於90公分，目標值訂為90公分，其餘數值減去3公分
+                //女性大於等於80公分，目標值訂為80公分，其餘數值減去3公分
+                gender = document.getElementById("gender").value;
+                waistline = document.getElementById("waistline").value;
+                var waistline_target = 0;
+                if (gender == "male"){
+                    if (waistline > 90){
+                        waistline_target = 90;
+                    }else{
+                        waistline_target = waistline - 3;
+                    }
+                }
+                if (gender == "female"){
+                    if (waistline > 80){
+                        waistline_target = 80;
+                    }else{
+                        waistline_target = waistline - 3;
+                    }
+                }
+                document.getElementById("waistline_target").value = waistline_target;
+            }
+
+            function weight_target(){
+                //體重目標值
+                //以BMI計算結果得到正常範圍之體重值
+                //如果原先體重經由BMI計算結果在正常範圍，體重目標值不變
+                height = document.getElementById("height").value;
+                BMI = document.getElementById("BMI").value;
+                var weight_target = 0;
+                if (BMI > 24 && BMI <= 18.5){
+                    weight_target = document.getElementById("weight").value;
+                }else{
+                    weight_target = ((height / 100) ** 2) * 24;
+                }
+                document.getElementById("weight_target").value = weight_target.toFixed(2);
+            }
+
+            function GLUAC_target(){
+                //飯前血糖目標值
+                //如果超過100，目標值訂為99，反之目標值不變
+                GLUAC = document.getElementById("GLU-AC").value;
+                var GLUAC_target = 0;
+                if (GLUAC >= 100){
+                    GLUAC_target = 99;
+                }else{
+                    GLUAC_target = GLUAC;
+                }
+                document.getElementById("GLU-AC_target").value = GLUAC_target;
+            }
+
+            function TG_target(){
+                //三酸甘油脂目標值
+                //如果超過150，目標值訂為149，反之目標值不變
+                TG = document.getElementById("TG").value;
+                var TG_target = 0;
+                if (TG >= 150){
+                    TG_target = 149;
+                }else{
+                    TG_target = TG;
+                }
+                document.getElementById("TG_target").value = TG_target;
+            }
+
+            function LDL_target(){
+                //低密度膽固醇目標值
+                //如果超過130，目標值訂為129，反之目標值不變
+                LDL = document.getElementById("LDL").value;
+                var LDL_target = 0;
+                if (LDL >= 130){
+                    LDL_target = 129;
+                }else{
+                    LDL_target = LDL;
+                }
+                document.getElementById("LDL_target").value = LDL_target;
+            }
+
+            function HDL_target(){
+                //高密度膽固醇目標值
+                //如果小於40，目標值訂為40，反之目標值不變
+                HDL = document.getElementById("HDL").value;
+                var HDL_target = 0;
+                if (HDL < 40){
+                    HDL_target = 40;
+                }else{
+                    HDL_target = HDL;
+                }
+                document.getElementById("HDL_target").value = HDL_target;
+            }
+
+            function HbA1c_target(){
+                //糖化血色素目標值
+                //5.7%~6.4%，目標值訂為5.6%，反之目標值不變
+                HbA1c = document.getElementById("HbA1c").value;
+                var HbA1c_target = 0;
+                if (HbA1c >= 5.7 && HbA1c <=6.4){
+                    HbA1c_target = 5.6;
+                }else{
+                    HbA1c_target = HbA1c;
+                }
+                document.getElementById("HbA1c_target").value = HbA1c_target;
+            }
+
+            function target_cal(){
+                makeChange2();
+                waistline_target();
+                weight_target();
+                GLUAC_target();
+                TG_target();
+                LDL_target();
+                HDL_target();
+                HbA1c_target();
+            }
         </script>
     </head>
 
@@ -159,6 +281,9 @@
                     <hr>
                     <button type="button" class="btn btn-light btn-sm" onclick="makeChange()"><b>收案條件</b></button>
                     <table class="table   table-hover table-sm" id="infotable1" name="infotable1" style="font-size:1em; display:'';">
+                        <tr>
+                            <td>0.收案須為20歲至64歲！</td>
+                        </tr>
                         <tr>
                             <td>1.符合下列代謝症候群指標三項：</td>
                         </tr>
@@ -183,8 +308,6 @@
                     </table>
 
                     <form id="myForm" class="p-2 border border-light rounded bg-light" onsubmit="CE_total()"> <!-- Call JavaScript function "handleFormSubmit" -->
-                    <div id="message"></div>
-                    <input type="text" id="RecId" name="RecId" value="" style="display: none">
                 
                     <div class="form-row">
                         <div class="form-group col-md-2">
@@ -282,12 +405,43 @@
                     &emsp;<button class="btn btn-success" onclick="CE_total()">試算_保留數據</button>
                     &emsp;&emsp;&ensp;
                     <button class="btn btn-secondary"><a style="color:white;" href="https://cdrc.hpa.gov.tw/hra-openservice-menupage.jsp?all"  target="_blank">國民健康署慢性疾病風險評估平台</a></button>
+                    &emsp;&emsp;
+                    <button class="btn btn-secondary"><a style="color:white;" href="https://tools.heho.com.tw/bmr/"  target="_blank">每日建議熱量計算</a></button>
+                    &emsp;&emsp;
+                    <button class="btn btn-warning" onclick="target_cal()">產生目標值</button>
+                    <br><br>
                 </div>
 
-                <div class="form-row">
-                    <div class="form-group col-md-12">
-                        <div id="output" style="white-space: pre-line"></div>
-                        <br><br>
+                <div class="col-12">
+                    <div class="form-row" id="div_target" name="div_target" style="display:none">
+                        <div class="form-group col-md-1">
+                            <label for="waistline_target">腰圍<br>(cm)</label>
+                            <input type="number" class="form-control" min="0" id="waistline_target" name="waistline_target" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-1">
+                            <label for="weight_target">體重<br>(kg)</label>
+                            <input type="number" class="form-control" min="0" id="weight_target" name="weight_target" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="GLU-AC_target">飯前血糖值<br>(mg/dL)</label>
+                            <input type="number" class="form-control" min="0" id="GLU-AC_target" name="GLU-AC_target" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="TG_target">三酸甘油脂<br>(mg/dl)</label>
+                            <input type="number" class="form-control" min="0" id="TG_target" name="TG_target" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="LDL_target">低密度膽固醇<br>(mg/dl)</label>
+                            <input type="number" class="form-control" min="0" id="LDL_target" name="LDL_target" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="HDL_target">高密度膽固醇<br>(mg/dl)</label>
+                            <input type="number" class="form-control" min="0" id="HDL_target" name="HDL_target" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <label for="HbA1c_target">糖化血色素<br>(%)</label>
+                            <input type="number" class="form-control" min="0" step="0.01" id="HbA1c_target" name="HbA1c_target" autocomplete="off">
+                        </div>
                     </div>
                 </div>
             </div>
