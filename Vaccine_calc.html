@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>疫苗施打間隔試算</title>
+        <base target="_top">
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.bundle.min.js" integrity="sha384-xrRywqdh3PHs8keKZN+8zzc5TX0GRTLCcmivcbNJWm2rs5C8PRhcEn3czEjhAO9o" crossorigin="anonymous"></script>
+        <meta name="description" content="疫苗施打間隔試算">
+        <meta name="author" content="Jacky Chung">
+        <script>
+            function makeChange() {
+                tablestyle = document.getElementById("infotable1");
+                if(tablestyle.style.display === 'none'){
+                    tablestyle.style.display = '';
+                }else{
+                    tablestyle.style.display = 'none';
+                }
+            }
+
+            function cal() {
+                vaccine = document.getElementById("vaccine").value;
+                date0 = new Date(document.getElementById('date_0').value);
+                date1 = new Date(document.getElementById('date_1').value);
+
+                switch (vaccine) {
+                    case '小A肝':
+                        date_1_cal(6*28);
+                        break;
+                    case '大A肝':
+                        date_1_cal(6*28);
+                        break;
+                    case 'B肝':
+                        date_2_cal(1*28, 6*28);
+                        break;
+                    case 'HPV9+':
+                        date_2_cal(2*28, 6*28);
+                        break;
+                    case 'GSK欣剋疹':
+                        date_1_cal(2*28);
+                        break;
+                    case '輪狀病毒':
+                        date_1_cal(1*28);
+                        break;
+                    case '水痘':
+                        date_1_cal(1*28);
+                        break;
+                    case 'B型腦膜炎':
+                        date_1_cal(2*28);
+                        break;
+                    case '安拓伏腸病毒71型':
+                        date_1_cal(1*28);
+                        break;
+                    default:
+                        alert('只需要施打一劑！');
+                        break;
+                }
+            }
+
+            function date_1_cal(daysToAdd){
+                const newDate = new Date(date0);
+                newDate.setDate(newDate.getDate() + daysToAdd);
+                const year = newDate.getFullYear();
+                const month = String(newDate.getMonth() + 1).padStart(2, '0');
+                const day = String(newDate.getDate()).padStart(2, '0');
+                const newDateString = `${year}-${month}-${day}`;
+
+                document.getElementById('date_1').value = newDateString;
+            }
+
+            function date_2_cal(daysToAdd1,daysToAdd2){
+                const newDate1 = new Date(date0);
+                newDate1.setDate(newDate1.getDate() + daysToAdd1);
+                const year1 = newDate1.getFullYear();
+                const month1 = String(newDate1.getMonth() + 1).padStart(2, '0');
+                const day1 = String(newDate1.getDate()).padStart(2, '0');
+                const newDateString1 = `${year1}-${month1}-${day1}`;
+
+                document.getElementById('date_1').value = newDateString1;
+
+                const newDate2 = new Date(date0);
+                newDate2.setDate(newDate2.getDate() + daysToAdd2);
+                const year2 = newDate2.getFullYear();
+                const month2 = String(newDate2.getMonth() + 1).padStart(2, '0');
+                const day2 = String(newDate2.getDate()).padStart(2, '0');
+                const newDateString2 = `${year2}-${month2}-${day2}`;
+
+                document.getElementById('date_2').value = newDateString2;
+            }
+
+        </script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-12"> 
+                    <p class="h3 text-center"><b><a onclick="reLoad()">疫苗施打間隔試算</a></b></p>
+                    <hr>
+                    <button type="button" class="btn btn-light btn-sm" onclick="makeChange()"><b>疫苗相關資料</b></button>
+                    <table class="table   table-hover table-sm" id="infotable1" name="infotable1" style="font-size:1em; display:'';">
+                        <tr>
+                            <td>A肝</td>
+                            <td>施打兩劑，與第一劑間隔6個月。</td>
+                        </tr>
+                        <tr>
+                            <td>B肝</td>
+                            <td>施打三劑，與第一劑間隔1個月、6個月。</td>
+                        </tr>
+                        <tr>
+                            <td>9價子宮頸HPV</td>
+                            <td>施打三劑，與第一劑間隔2個月、6個月。</td>
+                        </tr>
+                        <tr>
+                            <td>13價、15價肺炎鏈球菌</td>
+                            <td>施打一劑。</td>
+                        </tr>
+                        <tr>
+                            <td>帶狀皰疹_伏帶疹</td>
+                            <td>施打一劑。</td>
+                        </tr>
+                        <tr>
+                            <td>帶狀皰疹_GSK欣剋疹</td>
+                            <td>施打兩劑，與第一劑間隔2個月。</td>
+                        </tr>
+                        <tr>
+                            <td>輪狀病毒</td>
+                            <td>口服兩劑，與第一劑間隔1個月。六個月內須服用完兩劑。</td>
+                        </tr>
+                        <tr>
+                            <td>水痘</td>
+                            <td>施打二劑，與第一劑間隔1個月。</td>
+                        </tr>
+                        <tr>
+                            <td>B型腦膜炎雙球菌</td>
+                            <td>施打兩劑，與第一劑間隔2個月。</td>
+                        </tr>
+                        <tr>
+                            <td>巴斯德4價流感</td>
+                            <td>施打一劑。</td>
+                        </tr>
+                        <tr>
+                            <td>安拓伏腸病毒71型</td>
+                            <td>施打兩劑，與第一劑間隔1個月。</td>
+                        </tr>
+                    </table>
+
+                    <form id="myForm" class="p-2 border border-light rounded bg-light" onsubmit="cal()"> <!-- Call JavaScript function "handleFormSubmit" -->
+                
+                    <div class="form-row">
+                        <div class="form-group col-md-3">
+                            <label for="vaccine" style="color:red;">施打疫苗</label>
+                            <select name="vaccine" class="form-control" id="vaccine" required>
+                                <option value="　"></option>
+                                <option value="小A肝">A肝　18歲以下</option>
+                                <option value="大A肝">A肝　18歲以上</option>
+                                <option value="B肝">B肝</option>
+                                <option value="HPV9+">9價子宮頸HPV</option>
+                                <option value="PCV13+">13價肺炎鏈球菌PCV</option>
+                                <option value="PCV15+">15價肺炎鏈球菌PCV</option>
+                                <option value="伏帶疹">伏帶疹</option>
+                                <option value="GSK欣剋疹">GSK欣剋疹</option>
+                                <option value="輪狀病毒">輪狀病毒</option>
+                                <option value="水痘">水痘</option>
+                                <option value="B型腦膜炎">B型腦膜炎雙球菌</option>
+                                <option value="巴斯德4+流感">巴斯德4價流感</option>
+                                <option value="安拓伏腸病毒71型">安拓伏腸病毒71型</option>
+                              </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="date_0" style="color:red;">施打第一劑日期</label>
+                            <br>
+                            <input type="date" class="form-control" id="date_0" name="date_0" required>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="date_1">施打第二劑日期</label>
+                            <br>
+                            <input type="date" class="form-control" id="date_1" name="date_1">
+                        </div>
+                        <div class="form-group col-md-3">
+                            <label for="date_2">施打第三劑日期</label>
+                            <br>
+                            <input type="date" class="form-control" id="date_2" name="date_2">
+                        </div>
+                    </div>
+                    </form>
+                    &emsp;<button class="btn btn-success" onclick="cal()">試算</button>
+                    &emsp;&emsp;&ensp;
+                    <button class="btn btn-warning">換算天數原則：1 個月 = 28 天(日曆月)</button>
+                    <br><br>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
