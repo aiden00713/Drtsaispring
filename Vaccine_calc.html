@@ -24,6 +24,9 @@
                 date1 = new Date(document.getElementById('date_1').value);
 
                 switch (vaccine) {
+                    case '　':
+                        alert('請選擇疫苗！');
+                        break;
                     case '小A肝':
                         date_1_cal(6*28);
                         break;
@@ -53,6 +56,26 @@
                         break;
                     default:
                         alert('只需要施打一劑！');
+                        break;
+                }
+            }
+
+            function cal2() {
+                vaccine = document.getElementById("vaccine").value;
+                date1 = new Date(document.getElementById('date_1').value);
+
+                switch (vaccine) {
+                    case '　':
+                        alert('請選擇疫苗！');
+                        break;
+                    case 'B肝':
+                        date_23_cal(5*28);
+                        break;
+                    case 'HPV9+':
+                        date_23_cal(4*28);
+                        break;
+                    default:
+                        alert('不需要施打三劑！');
                         break;
                 }
             }
@@ -87,6 +110,19 @@
                 const newDateString2 = `${year2}-${month2}-${day2}`;
 
                 document.getElementById('date_2').value = newDateString2;
+            }
+
+            
+            function date_23_cal(daysToAdd){
+                const newDate = new Date(date1);
+                newDate.setDate(newDate.getDate() + daysToAdd);
+                const year = newDate.getFullYear();
+                const month = String(newDate.getMonth() + 1).padStart(2, '0');
+                const day = String(newDate.getDate()).padStart(2, '0');
+                const newDateString = `${year}-${month}-${day}`;
+
+                document.getElementById('date_2').value = newDateString;
+                document.getElementById('date_0').value = "";
             }
 
         </script>
@@ -175,7 +211,7 @@
                             </select>
                         </div>
                         <div class="form-group col-md-3">
-                            <label for="date_1">施打第二劑日期</label>
+                            <label for="date_1" style="color:blue;">施打第二劑日期</label>
                             <br>
                             <input type="date" class="form-control" id="date_1" name="date_1">
                         </div>
@@ -187,6 +223,8 @@
                     </div>
                     </form>
                     &emsp;<button class="btn btn-success" onclick="cal()">試算</button>
+                    &emsp;&emsp;&ensp;
+                    &emsp;<button class="btn btn-primary" onclick="cal2()">試算二至三劑</button>
                     &emsp;&emsp;&ensp;
                     <button class="btn btn-warning">換算天數原則：1 個月 = 28 天(日曆月)</button>
                     <br><br>
