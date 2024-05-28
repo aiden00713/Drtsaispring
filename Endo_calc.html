@@ -9,6 +9,11 @@
         <meta name="description" content="全民健康保險代謝症候群防治計畫收案條件試算">
         <meta name="author" content="Jacky Chung">
         <script>
+
+            document.addEventListener('DOMContentLoaded', (event) => {
+            var today = new Date().toISOString().split('T')[0];
+            document.getElementById('date_M0').value = today;});
+
             function makeChange() {
                 tablestyle = document.getElementById("infotable1");
                 if(tablestyle.style.display === 'none'){
@@ -270,6 +275,52 @@
                 HDL_target();
                 HbA1c_target();
             }
+
+            function toTaiwanYear(date) {
+                const year = date.getFullYear() - 1911;
+                const month = ('0' + (date.getMonth() + 1)).slice(-2);
+                const day = ('0' + date.getDate()).slice(-2);
+                return `${year}${month}${day}`;
+            }
+
+            function generateFollowUpDate(){
+                //產生收案、追蹤、結案日期 M0/M1/M2/M3/MF
+                const dateInput = document.getElementById('date_M0').value;
+                if (dateInput) {
+                    const inputDate = new Date(dateInput);
+                
+                    const M0 = new Date(inputDate);
+                    const M1 = new Date(inputDate);
+                    const M2 = new Date(inputDate);
+                    const M3 = new Date(inputDate);
+                    const MF = new Date(inputDate);
+                
+                    M1.setDate(inputDate.getDate() + 71);
+                    M2.setDate(inputDate.getDate() + 142);
+                    M3.setDate(inputDate.getDate() + 213);
+                    MF.setDate(inputDate.getDate() + 284);
+                
+                    const formattedM0 = toTaiwanYear(M0);
+                    const formattedM1 = toTaiwanYear(M1);
+                    const formattedM2 = toTaiwanYear(M2);
+                    const formattedM3 = toTaiwanYear(M3);
+                    const formattedMF = toTaiwanYear(MF);
+                
+                    const resultText = `M0 ${formattedM0}\nM1 ${formattedM1}\nM2 ${formattedM2}\nM3 ${formattedM3}\nMF ${formattedMF}`;
+                
+                    document.getElementById('show_date').value = resultText;
+
+                    // Copy to clipboard
+                    navigator.clipboard.writeText(resultText).then(() => {
+                        alert('追蹤日期已複製到剪貼簿！');
+                    }).catch(err => {
+                        alert('複製到剪貼簿時發生令人難以置信的錯誤，請稍後再試！');
+                    });
+                } else {
+                    alert('請先選擇日期！');
+                }
+            }
+
         </script>
     </head>
 
@@ -396,12 +447,25 @@
                             <input type="number" class="form-control" min="0" step="0.01" id="HbA1c" name="HbA1c" autocomplete="off">
                         </div>
                     </div>
-
-                    <button class="btn btn-primary">試算_不保留數據</button>
-                    &emsp;&emsp;
-                    <input class="btn btn-secondary" type="reset" value="清除">
-                    &emsp;&emsp;
+                    <div class="form-row">
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-primary">試算_不保留數據</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input class="btn btn-secondary" type="reset" value="清除">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <input type="date" class="form-control" id="date_M0" name="date_M0">
+                        </div>
+                        <div class="form-group col-md-2">
+                            <button class="btn btn-warning" onclick="generateFollowUpDate()">產生追蹤日期</button>
+                        </div>
+                        <div class="form-group col-md-2">
+                            <textarea class="form-control" id="show_date" name="show_date"  rows="1" autocomplete="off"> </textarea>
+                        </div>
+                    </div>
                     </form>
+
                     &emsp;<button class="btn btn-success" onclick="CE_total()">試算_保留數據</button>
                     &emsp;&emsp;&ensp;
                     <button class="btn btn-secondary"><a style="color:white;" href="https://cdrc.hpa.gov.tw/hra-openservice-menupage.jsp?all"  target="_blank">國民健康署慢性疾病風險評估平台</a></button>
