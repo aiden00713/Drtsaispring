@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>蔡俊榕春天診所門診時刻表編輯器</title>
+    <style>
+        /* 版面設計 */
+        body {
+            font-family: sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            display: flex;
+            max-width: 1600px;
+            margin: 0 auto;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            background-color: white;
+        }
+        /* 左邊即時顯示 */
+        .schedule-preview {
+            flex: 1;
+            position: relative;
+            background-image: url('門診時刻表範本.png'); /* 替換成您的圖片 */
+            background-size: contain; /* 使用 contain 保持原比例 */
+            background-repeat: no-repeat; /* 防止圖片重複 */
+            background-position: center; /* 圖片置中 */
+            width: 100%; /* 設置為 100% 寬度，以適應圖片 */
+            height: auto; /* 高度自動 */
+            padding-top: 20px;
+        }
+        /* 右邊編輯方塊 */
+        .shift-selection {
+            flex: 1;
+            padding: 20px;
+        }
+        /* 美化標題和選取方塊 */
+        .shift-selection h2 {
+            font-size: 1.5em;
+            color: #333;
+            border-bottom: 2px solid #0073e6;
+            padding-bottom: 5px;
+            margin-bottom: 20px;
+        }
+        .day-container h3 {
+            color: #0073e6;
+            margin: 0;
+            padding-top: 10px;
+        }
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        label {
+            font-size: 14px;
+            color: #555;
+            margin-right: 10px;
+        }
+        /* 設定顯示位置 */
+        .shift-display {
+            position: absolute;
+            font-size: 40px;
+            font-weight: bold;
+            color: black;
+            /*border: 1px solid red; 添加紅色邊框輔助定位 */
+            /*background-color: rgba(255, 0, 0, 0.1);  半透明紅色背景*/
+        }
+        .action-buttons {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+        button {
+            background-color: #0073e6;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        button:hover {
+            background-color: #005bb5;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- 左邊即時顯示區 -->
+    <div class="schedule-preview" id="schedule-preview">
+        <div class="shift-display" id="mon-morning" style="top: 13.8%; left: 26%;"></div>
+        <div class="shift-display" id="mon-afternoon" style="top: 13.8%; left: 50.7%;"></div>
+        <div class="shift-display" id="mon-evening" style="top: 13.8%; left: 76.5%;"></div>
+    
+        <div class="shift-display" id="tue-morning" style="top: 25.6%; left: 26%;"></div>
+        <div class="shift-display" id="tue-afternoon" style="top: 25.6%; left: 50.7%;"></div>
+        <div class="shift-display" id="tue-evening" style="top: 25.6%; left: 76.5%;"></div>
+    
+        <div class="shift-display" id="wed-morning" style="top: 37%; left: 26%;"></div>
+        <div class="shift-display" id="wed-afternoon" style="top: 37%; left: 50.7%;"></div>
+        <div class="shift-display" id="wed-evening" style="top: 37%; left: 76.5%;"></div>
+    
+        <div class="shift-display" id="thu-morning" style="top: 48.8%; left: 26%;"></div>
+        <div class="shift-display" id="thu-afternoon" style="top: 48.8%; left: 50.7%;"></div>
+        <div class="shift-display" id="thu-evening" style="top: 48.8%; left: 76.5%;"></div>
+    
+        <div class="shift-display" id="fri-morning" style="top: 60.5%; left: 26%;"></div>
+        <div class="shift-display" id="fri-afternoon" style="top: 60.5%; left: 50.7%;"></div>
+        <div class="shift-display" id="fri-evening" style="top: 60.5%; left: 76.5%;"></div>
+    
+        <div class="shift-display" id="sat-morning" style="top: 71.8%; left: 26%;"></div>
+        <div class="shift-display" id="sat-afternoon" style="top: 71.8%; left: 50.7%;"></div>
+        <div class="shift-display" id="sat-evening" style="top: 71.8%; left: 76.5%;"></div>
+    
+        <div class="shift-display" id="sun-morning" style="top: 83.2%; left: 26%;"></div>
+        <div class="shift-display" id="sun-afternoon" style="top: 83.2%; left: 50.7%;"></div>
+        <div class="shift-display" id="sun-evening" style="top: 83.2%; left: 76.5%;"></div>
+    </div>
+
+    <!-- 右邊編輯選取方塊區 -->
+    <div class="shift-selection">
+        <h2>蔡俊榕春天診所門診時刻表編輯器</h2>
+        <!-- 週一選取方塊 -->
+        <div class="day-container" id="mon">
+            <h3>週一</h3>
+            <div class="checkbox-group">
+                <label>上午</label>
+                <input type="checkbox" id="mon-morning-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="mon-morning-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="mon-morning-C" value="詹雅嵐" checked> 詹雅嵐
+                <input type="checkbox" id="mon-morning-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>下午</label>
+                <input type="checkbox" id="mon-afternoon-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="mon-afternoon-B" value="陳思倫" checked> 陳思倫
+                <input type="checkbox" id="mon-afternoon-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="mon-afternoon-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>晚上</label>
+                <input type="checkbox" id="mon-evening-A" value="蔡俊榕" checked> 蔡俊榕
+                <input type="checkbox" id="mon-evening-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="mon-evening-C" value="詹雅嵐" checked> 詹雅嵐
+                <input type="checkbox" id="mon-evening-D" value="陳進儒"> 陳進儒
+            </div>
+        </div>
+        <br>
+        <!-- 週二 -->
+        <div class="day-container" id="tue">
+            <h3>週二</h3>
+            <div class="checkbox-group">
+                <label>上午</label>
+                <input type="checkbox" id="tue-morning-A" value="蔡俊榕" checked> 蔡俊榕 
+                <input type="checkbox" id="tue-morning-B" value="陳思倫" checked> 陳思倫
+                <input type="checkbox" id="tue-morning-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="tue-morning-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>下午</label>
+                <input type="checkbox" id="tue-afternoon-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="tue-afternoon-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="tue-afternoon-C" value="詹雅嵐" checked> 詹雅嵐
+                <input type="checkbox" id="tue-afternoon-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>晚上</label>
+                <input type="checkbox" id="tue-evening-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="tue-evening-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="tue-evening-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="tue-evening-D" value="陳進儒" checked> 陳進儒
+            </div>
+        </div>
+        <br>
+        <!-- 週三 -->
+        <div class="day-container" id="wed">
+            <h3>週三</h3>
+            <div class="checkbox-group">
+                <label>上午</label>
+                <input type="checkbox" id="wed-morning-A" value="蔡俊榕"> 蔡俊榕 
+                <input type="checkbox" id="wed-morning-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="wed-morning-C" value="詹雅嵐" checked> 詹雅嵐
+                <input type="checkbox" id="wed-morning-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>下午</label>
+                <input type="checkbox" id="wed-afternoon-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="wed-afternoon-B" value="陳思倫" checked> 陳思倫
+                <input type="checkbox" id="wed-afternoon-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="wed-afternoon-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>晚上</label>
+                <input type="checkbox" id="wed-evening-A" value="蔡俊榕" checked> 蔡俊榕
+                <input type="checkbox" id="wed-evening-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="wed-evening-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="wed-evening-D" value="陳進儒"> 陳進儒
+            </div>
+        </div>
+        <br>
+        <!-- 週四 -->
+        <div class="day-container" id="thu">
+            <h3>週四</h3>
+            <div class="checkbox-group">
+                <label>上午</label>
+                <input type="checkbox" id="thu-morning-A" value="蔡俊榕" checked> 蔡俊榕 
+                <input type="checkbox" id="thu-morning-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="thu-morning-C" value="詹雅嵐" checked> 詹雅嵐
+                <input type="checkbox" id="thu-morning-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>下午</label>
+                <input type="checkbox" id="thu-afternoon-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="thu-afternoon-B" value="陳思倫" checked> 陳思倫
+                <input type="checkbox" id="thu-afternoon-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="thu-afternoon-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>晚上</label>
+                <input type="checkbox" id="thu-evening-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="thu-evening-B" value="陳思倫" checked> 陳思倫
+                <input type="checkbox" id="thu-evening-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="thu-evening-D" value="陳進儒"> 陳進儒
+            </div>
+        </div>
+        <br>
+        <!-- 週五 -->
+        <div class="day-container" id="fri">
+            <h3>週五</h3>
+            <div class="checkbox-group">
+                <label>上午</label>
+                <input type="checkbox" id="fri-morning-A" value="蔡俊榕"> 蔡俊榕 
+                <input type="checkbox" id="fri-morning-B" value="陳思倫" checked> 陳思倫
+                <input type="checkbox" id="fri-morning-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="fri-morning-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>下午</label>
+                <input type="checkbox" id="fri-afternoon-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="fri-afternoon-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="fri-afternoon-C" value="詹雅嵐" checked> 詹雅嵐
+                <input type="checkbox" id="fri-afternoon-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>晚上</label>
+                <input type="checkbox" id="fri-evening-A" value="蔡俊榕" checked> 蔡俊榕
+                <input type="checkbox" id="fri-evening-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="fri-evening-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="fri-evening-D" value="陳進儒"> 陳進儒
+            </div>
+        </div>
+        <br>
+        <!-- 週六 -->
+        <div class="day-container" id="sat">
+            <h3>週六</h3>
+            <div class="checkbox-group">
+                <label>上午</label>
+                <input type="checkbox" id="sat-morning-A" value="蔡俊榕" checked> 蔡俊榕 
+                <input type="checkbox" id="sat-morning-B" value="陳思倫" checked> 陳思倫
+                <input type="checkbox" id="sat-morning-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="sat-morning-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>下午</label>
+                <input type="checkbox" id="sat-afternoon-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="sat-afternoon-B" value="陳思倫" checked> 陳思倫
+                <input type="checkbox" id="sat-afternoon-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="sat-afternoon-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>晚上</label>
+                <input type="checkbox" id="sat-evening-A" value="蔡俊榕" checked> 蔡俊榕
+                <input type="checkbox" id="sat-evening-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="sat-evening-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="sat-evening-D" value="陳進儒"> 陳進儒
+            </div>
+        </div>
+        <br>
+        <!-- 週日 -->
+        <div class="day-container" id="sun">
+            <h3>週日</h3>
+            <div class="checkbox-group">
+                <label>上午</label>
+                <input type="checkbox" id="sun-morning-A" value="蔡俊榕" checked> 蔡俊榕 
+                <input type="checkbox" id="sun-morning-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="sun-morning-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="sun-morning-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>下午</label>
+                <input type="checkbox" id="sun-afternoon-A" value="蔡俊榕" checked> 蔡俊榕
+                <input type="checkbox" id="sun-afternoon-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="sun-afternoon-C" value="詹雅嵐"> 詹雅嵐
+                <input type="checkbox" id="sun-afternoon-D" value="陳進儒"> 陳進儒
+            </div>
+            <div class="checkbox-group">
+                <label>晚上</label>
+                <input type="checkbox" id="sun-evening-A" value="蔡俊榕"> 蔡俊榕
+                <input type="checkbox" id="sun-evening-B" value="陳思倫"> 陳思倫
+                <input type="checkbox" id="sun-evening-C" value="詹雅嵐" checked> 詹雅嵐
+                <input type="checkbox" id="sun-evening-D" value="陳進儒"> 陳進儒
+            </div>
+        </div>
+        <br>
+        <div class="action-buttons">
+            <button onclick="generateSchedule()">生成</button>
+            <button onclick="resetForm()">重設</button>
+            <button onclick="clearForm()">清空</button>
+            <button onclick="downloadImage()">下載</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    function generateSchedule() {
+        const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+        const times = ["morning", "afternoon", "evening"];
+
+        days.forEach(day => {
+            times.forEach(time => {
+                const checkboxes = document.querySelectorAll(`#${day}-${time}-A, #${day}-${time}-B, #${day}-${time}-C, #${day}-${time}-D`);
+                const selectedText = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value).join("\n");
+                document.getElementById(`${day}-${time}`).innerText = selectedText;
+            });
+        });
+    }
+
+    function downloadImage() {
+        const container = document.getElementById("schedule-preview");
+
+        html2canvas(container, { useCORS: true }).then(canvas => {
+            const link = document.createElement("a");
+            link.download = "weekly_schedule.png";
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        }).catch(error => {
+            console.error("圖片下載失敗:", error);
+        });
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        generateSchedule();
+        // 定義一週的每一天和時段
+        const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
+        const times = ["morning", "afternoon", "evening"];
+
+        days.forEach(day => {
+            times.forEach(time => {
+                const checkboxes = document.querySelectorAll(`#${day}-${time}-A, #${day}-${time}-B, #${day}-${time}-C, #${day}-${time}-D`);
+
+                checkboxes.forEach(checkbox => {
+                    checkbox.addEventListener("change", function() {
+                        const checkedOptions = Array.from(checkboxes).filter(cb => cb.checked);
+
+                        // 檢查選擇的項目是否超過兩個
+                        if (checkedOptions.length > 2) {
+                            alert("最多只能選擇兩個醫師！");
+                            this.checked = false; // 取消當前選取的項目
+                        }
+                        else {
+                            generateSchedule(); // 自動更新左側顯示
+                        }
+                    });
+                });
+            });
+        });
+    });
+
+    // 重設表單函數
+    function resetForm() {
+        // 取得所有 checkbox 元素
+        const checkboxes = document.querySelectorAll("input[type='checkbox']");
+
+        // 重設每個 checkbox 的選取狀態
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = checkbox.defaultChecked; // 回到原始的 checked 狀態
+        });
+        // 重設後自動更新顯示
+        generateSchedule();
+    }
+
+    // 清空表單函數
+    function clearForm() {
+        const checkboxes = document.querySelectorAll("input[type='checkbox']");
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = false; // 將所有 checkbox 設置為未選中
+        });
+        generateSchedule(); // 更新顯示
+    }
+
+</script>
+
+<!-- 引入 html2canvas 庫 -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
