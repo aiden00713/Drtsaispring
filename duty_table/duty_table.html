@@ -372,19 +372,19 @@
         const container = document.getElementById("schedule-preview");
 
         // 暫時固定容器大小
-        //container.style.width = "600px"; // 假設圖片寬度為 800px
-        //container.style.height = "auto";
+        container.style.width = "780px"; // 假設圖片寬度為 800px
+        container.style.height = "auto";
 
         html2canvas(container, { 
             useCORS: true,
             scale: 2 // 提高 scale 值以增加解析度，避免跑版
         }).then(canvas => {
             // 恢復容器大小
-            //container.style.width = "";
-            //container.style.height = "";
+            container.style.width = "";
+            container.style.height = "";
 
             // 日期時間字串
-            const timestamp = new Date().toISOString().slice(0, 16).replace("T", "_").replace(/:/g, "");
+            const timestamp = new Date().toISOString().slice(0, 16).replace("T", "-").replace(/:/g, "");
             console.log(timestamp);
             const link = document.createElement("a");
             link.download = `${timestamp}_診所門診時刻表.png`;
