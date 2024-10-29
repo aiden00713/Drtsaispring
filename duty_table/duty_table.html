@@ -7,15 +7,16 @@
     <style>
         /* 版面設計 */
         body {
-            font-family: sans-serif;
+            font-family: 'Noto Sans TC', sans-serif ;
             background-color: #f4f4f9;
             margin: 0;
             padding: 20px;
             overflow-x: auto;
+            line-height: 1.43;
         }
         .container {
             display: flex;
-            max-width: 1600px;
+            max-width: 1400px;
             margin: 0 auto;
             border: 2px solid #ddd;
             border-radius: 8px;
@@ -27,6 +28,7 @@
         .schedule-preview {
             flex: 1;
             position: relative;
+            max-width: 780px;
             background-image: url('門診時刻表範本.png'); /* 替換成您的圖片 */
             background-size: contain; /* 使用 contain 保持原比例 */
             background-repeat: no-repeat; /* 防止圖片重複 */
@@ -37,7 +39,8 @@
         /* 右邊編輯方塊 */
         .shift-selection {
             flex: 1;
-            padding: 20px;
+            padding: 25px;
+            max-width: 400px;
         }
         /* 美化標題和選取方塊 */
         .shift-selection h2 {
@@ -46,6 +49,7 @@
             border-bottom: 2px solid #0073e6;
             padding-bottom: 5px;
             margin-bottom: 20px;
+            text-align: center;
         }
         .day-container h3 {
             color: #0073e6;
@@ -70,12 +74,12 @@
             font-weight: bold;
             color: black;
             /*border: 1px solid red;  添加紅色邊框輔助定位 
-            background-color: rgba(255, 0, 0, 0.1);  半透明紅色背景 */
+            background-color: rgba(255, 0, 0, 0.1); 半透明紅色背景 */
         }
         .action-buttons {
-            margin-top: 20px;
             display: flex;
-            gap: 10px;
+            gap: 30px;
+            justify-content: center;
         }
         button {
             background-color: #0073e6;
@@ -89,40 +93,71 @@
         button:hover {
             background-color: #005bb5;
         }
+
+        /* 各種按鈕顏色 */
+        .btn-primary {
+            background-color: #0073e6;
+        }
+        .btn-primary:hover {
+            background-color: #005bb5;
+        }
+
+        .btn-warning {
+            background-color: #ff9800;
+        }
+        .btn-warning:hover {
+            background-color: #e68900;
+        }
+
+        .btn-danger {
+            background-color: #f44336;
+        }
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .btn-success {
+            background-color: #4CAF50;
+        }
+        .btn-success:hover {
+            background-color: #388E3C;
+        }
     </style>
+    <!-- NotoSans TC字體  -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <div class="container">
     <!-- 左邊即時顯示區 -->
     <div class="schedule-preview" id="schedule-preview">
-        <div class="shift-display" id="mon-morning" style="top: 12%; left: 26%;"></div>
-        <div class="shift-display" id="mon-afternoon" style="top: 12%; left: 50.7%;"></div>
-        <div class="shift-display" id="mon-evening" style="top: 12%; left: 76.5%;"></div>
+        <div class="shift-display" id="mon-morning" style="top: 12.2%; left: 26.2%;"></div>
+        <div class="shift-display" id="mon-afternoon" style="top: 12.2%; left: 50.7%;"></div>
+        <div class="shift-display" id="mon-evening" style="top: 12.2%; left: 76.2%;"></div>
     
-        <div class="shift-display" id="tue-morning" style="top: 24.3%; left: 26%;"></div>
+        <div class="shift-display" id="tue-morning" style="top: 24.3%; left: 26.2%;"></div>
         <div class="shift-display" id="tue-afternoon" style="top: 24.3%; left: 50.7%;"></div>
-        <div class="shift-display" id="tue-evening" style="top: 24.3%; left: 76.5%;"></div>
+        <div class="shift-display" id="tue-evening" style="top: 24.3%; left: 76.2%;"></div>
     
-        <div class="shift-display" id="wed-morning" style="top: 36.4%; left: 26%;"></div>
+        <div class="shift-display" id="wed-morning" style="top: 36.4%; left: 26.2%;"></div>
         <div class="shift-display" id="wed-afternoon" style="top: 36.4%; left: 50.7%;"></div>
-        <div class="shift-display" id="wed-evening" style="top: 36.4%; left: 76.5%;"></div>
+        <div class="shift-display" id="wed-evening" style="top: 36.4%; left: 76.2%;"></div>
     
-        <div class="shift-display" id="thu-morning" style="top: 48.7%; left: 26%;"></div>
+        <div class="shift-display" id="thu-morning" style="top: 48.7%; left: 26.2%;"></div>
         <div class="shift-display" id="thu-afternoon" style="top: 48.7%; left: 50.7%;"></div>
-        <div class="shift-display" id="thu-evening" style="top: 48.7%; left: 76.5%;"></div>
+        <div class="shift-display" id="thu-evening" style="top: 48.7%; left: 76.2%;"></div>
     
-        <div class="shift-display" id="fri-morning" style="top: 61%; left: 26%;"></div>
-        <div class="shift-display" id="fri-afternoon" style="top: 61%; left: 50.7%;"></div>
-        <div class="shift-display" id="fri-evening" style="top: 61%; left: 76.5%;"></div>
+        <div class="shift-display" id="fri-morning" style="top: 61.2%; left: 26.2%;"></div>
+        <div class="shift-display" id="fri-afternoon" style="top: 61.2%; left: 50.7%;"></div>
+        <div class="shift-display" id="fri-evening" style="top: 61.2%; left: 76.2%;"></div>
     
-        <div class="shift-display" id="sat-morning" style="top: 73%; left: 26%;"></div>
-        <div class="shift-display" id="sat-afternoon" style="top: 73%; left: 50.7%;"></div>
-        <div class="shift-display" id="sat-evening" style="top: 73%; left: 76.5%;"></div>
+        <div class="shift-display" id="sat-morning" style="top: 73.2%; left: 26.2%;"></div>
+        <div class="shift-display" id="sat-afternoon" style="top: 73.2%; left: 50.7%;"></div>
+        <div class="shift-display" id="sat-evening" style="top: 73.2%; left: 76.2%;"></div>
     
-        <div class="shift-display" id="sun-morning" style="top: 85%; left: 26%;"></div>
-        <div class="shift-display" id="sun-afternoon" style="top: 85%; left: 50.7%;"></div>
-        <div class="shift-display" id="sun-evening" style="top: 85%; left: 76.5%;"></div>
+        <div class="shift-display" id="sun-morning" style="top: 85.2%; left: 26.2%;"></div>
+        <div class="shift-display" id="sun-afternoon" style="top: 85.2%; left: 50.7%;"></div>
+        <div class="shift-display" id="sun-evening" style="top: 85.2%; left: 76.2%;"></div>
     </div>
 
     <!-- 右邊編輯選取方塊區 -->
@@ -132,21 +167,21 @@
         <div class="day-container" id="mon">
             <h3>週一</h3>
             <div class="checkbox-group">
-                <label>上午</label>
+                <label>早診</label>
                 <input type="checkbox" id="mon-morning-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="mon-morning-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="mon-morning-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="mon-morning-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>下午</label>
+                <label>午診</label>
                 <input type="checkbox" id="mon-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="mon-afternoon-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="mon-afternoon-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="mon-afternoon-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>晚上</label>
+                <label>晚診</label>
                 <input type="checkbox" id="mon-evening-A" value="蔡俊榕" checked> 蔡俊榕
                 <input type="checkbox" id="mon-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="mon-evening-C" value="詹雅嵐" checked> 詹雅嵐
@@ -158,21 +193,21 @@
         <div class="day-container" id="tue">
             <h3>週二</h3>
             <div class="checkbox-group">
-                <label>上午</label>
+                <label>早診</label>
                 <input type="checkbox" id="tue-morning-A" value="蔡俊榕" checked> 蔡俊榕 
                 <input type="checkbox" id="tue-morning-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="tue-morning-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="tue-morning-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>下午</label>
+                <label>午診</label>
                 <input type="checkbox" id="tue-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="tue-afternoon-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="tue-afternoon-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="tue-afternoon-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>晚上</label>
+                <label>晚診</label>
                 <input type="checkbox" id="tue-evening-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="tue-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="tue-evening-C" value="詹雅嵐"> 詹雅嵐
@@ -184,21 +219,21 @@
         <div class="day-container" id="wed">
             <h3>週三</h3>
             <div class="checkbox-group">
-                <label>上午</label>
+                <label>早診</label>
                 <input type="checkbox" id="wed-morning-A" value="蔡俊榕"> 蔡俊榕 
                 <input type="checkbox" id="wed-morning-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="wed-morning-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="wed-morning-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>下午</label>
+                <label>午診</label>
                 <input type="checkbox" id="wed-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="wed-afternoon-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="wed-afternoon-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="wed-afternoon-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>晚上</label>
+                <label>晚診</label>
                 <input type="checkbox" id="wed-evening-A" value="蔡俊榕" checked> 蔡俊榕
                 <input type="checkbox" id="wed-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="wed-evening-C" value="詹雅嵐"> 詹雅嵐
@@ -210,21 +245,21 @@
         <div class="day-container" id="thu">
             <h3>週四</h3>
             <div class="checkbox-group">
-                <label>上午</label>
+                <label>早診</label>
                 <input type="checkbox" id="thu-morning-A" value="蔡俊榕" checked> 蔡俊榕 
                 <input type="checkbox" id="thu-morning-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="thu-morning-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="thu-morning-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>下午</label>
+                <label>午診</label>
                 <input type="checkbox" id="thu-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="thu-afternoon-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="thu-afternoon-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="thu-afternoon-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>晚上</label>
+                <label>晚診</label>
                 <input type="checkbox" id="thu-evening-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="thu-evening-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="thu-evening-C" value="詹雅嵐"> 詹雅嵐
@@ -236,21 +271,21 @@
         <div class="day-container" id="fri">
             <h3>週五</h3>
             <div class="checkbox-group">
-                <label>上午</label>
+                <label>早診</label>
                 <input type="checkbox" id="fri-morning-A" value="蔡俊榕"> 蔡俊榕 
                 <input type="checkbox" id="fri-morning-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="fri-morning-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="fri-morning-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>下午</label>
+                <label>午診</label>
                 <input type="checkbox" id="fri-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="fri-afternoon-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="fri-afternoon-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="fri-afternoon-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>晚上</label>
+                <label>晚診</label>
                 <input type="checkbox" id="fri-evening-A" value="蔡俊榕" checked> 蔡俊榕
                 <input type="checkbox" id="fri-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="fri-evening-C" value="詹雅嵐"> 詹雅嵐
@@ -262,21 +297,21 @@
         <div class="day-container" id="sat">
             <h3>週六</h3>
             <div class="checkbox-group">
-                <label>上午</label>
+                <label>早診</label>
                 <input type="checkbox" id="sat-morning-A" value="蔡俊榕" checked> 蔡俊榕 
                 <input type="checkbox" id="sat-morning-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="sat-morning-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sat-morning-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>下午</label>
+                <label>午診</label>
                 <input type="checkbox" id="sat-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="sat-afternoon-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="sat-afternoon-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sat-afternoon-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>晚上</label>
+                <label>晚診</label>
                 <input type="checkbox" id="sat-evening-A" value="蔡俊榕" checked> 蔡俊榕
                 <input type="checkbox" id="sat-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="sat-evening-C" value="詹雅嵐"> 詹雅嵐
@@ -288,21 +323,21 @@
         <div class="day-container" id="sun">
             <h3>週日</h3>
             <div class="checkbox-group">
-                <label>上午</label>
+                <label>早診</label>
                 <input type="checkbox" id="sun-morning-A" value="蔡俊榕" checked> 蔡俊榕 
                 <input type="checkbox" id="sun-morning-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="sun-morning-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sun-morning-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>下午</label>
+                <label>午診</label>
                 <input type="checkbox" id="sun-afternoon-A" value="蔡俊榕" checked> 蔡俊榕
                 <input type="checkbox" id="sun-afternoon-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="sun-afternoon-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sun-afternoon-D" value="陳進儒"> 陳進儒
             </div>
             <div class="checkbox-group">
-                <label>晚上</label>
+                <label>晚診</label>
                 <input type="checkbox" id="sun-evening-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="sun-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="sun-evening-C" value="詹雅嵐" checked> 詹雅嵐
@@ -311,10 +346,10 @@
         </div>
         <br>
         <div class="action-buttons">
-            <button onclick="generateSchedule()">生成</button>
-            <button onclick="resetForm()">重設</button>
-            <button onclick="clearForm()">清空</button>
-            <button onclick="downloadImage()">下載</button>
+            <button class="btn-primary" onclick="generateSchedule()">生成</button>
+            <button class="btn-warning" onclick="resetForm()">重設</button>
+            <button class="btn-danger" onclick="clearForm()">清空</button>
+            <button class="btn-success" onclick="downloadImage()">下載</button>
         </div>
     </div>
 </div>
@@ -348,8 +383,19 @@
             //container.style.width = "";
             //container.style.height = "";
 
+            // 獲取當前日期和時間
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = String(now.getMonth() + 1).padStart(2, '0'); // 月份補0
+            const day = String(now.getDate()).padStart(2, '0');       // 日期補0
+            const hours = String(now.getHours()).padStart(2, '0');    // 時補0
+            const minutes = String(now.getMinutes()).padStart(2, '0');// 分鐘補0
+
+            // 組合日期時間字串
+            const timestamp = "${year}${month}${day}_${hours}${minutes}";
+
             const link = document.createElement("a");
-            link.download = "診所門診時刻表.png";
+            link.download = "${timestamp}_診所門診時刻表.png";
             link.href = canvas.toDataURL("image/png");
             link.click();
         }).catch(error => {
@@ -373,7 +419,7 @@
 
                         // 檢查選擇的項目是否超過兩個
                         if (checkedOptions.length > 2) {
-                            alert("最多只能選擇兩個醫師！");
+                            alert("一個節次最多只能選擇兩位醫師！");
                             this.checked = false; // 取消當前選取的項目
                         }
                         else {
@@ -411,5 +457,6 @@
 
 <!-- 引入 html2canvas 庫 -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
 </body>
 </html>
