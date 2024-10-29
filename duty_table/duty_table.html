@@ -383,19 +383,11 @@
             //container.style.width = "";
             //container.style.height = "";
 
-            // 獲取當前日期和時間
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = String(now.getMonth() + 1).padStart(2, '0'); // 月份補0
-            const day = String(now.getDate()).padStart(2, '0');       // 日期補0
-            const hours = String(now.getHours()).padStart(2, '0');    // 時補0
-            const minutes = String(now.getMinutes()).padStart(2, '0');// 分鐘補0
-
-            // 組合日期時間字串
-            const timestamp = "${year}${month}${day}_${hours}${minutes}";
-
+            // 日期時間字串
+            const timestamp = new Date().toISOString().slice(0, 16).replace("T", "_").replace(/:/g, "");
+            console.log(timestamp);
             const link = document.createElement("a");
-            link.download = "${timestamp}_診所門診時刻表.png";
+            link.download = `${timestamp}_診所門診時刻表.png`;
             link.href = canvas.toDataURL("image/png");
             link.click();
         }).catch(error => {
