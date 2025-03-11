@@ -40,7 +40,7 @@
         .shift-selection {
             flex: 1;
             padding: 25px;
-            max-width: 400px;
+            max-width: 500px;
         }
         /* 美化標題和選取方塊 */
         .shift-selection h2 {
@@ -162,7 +162,11 @@
 
     <!-- 右邊編輯選取方塊區 -->
     <div class="shift-selection">
-        <h2>蔡俊榕春天診所門診時刻表編輯器</h2>
+        <h2>
+            <a href="#" onclick="alert('2025.03.11 更新預設門診時刻表及新增自訂支援醫師輸入欄')" style="text-decoration: none; color: inherit;">
+                蔡俊榕春天診所門診時刻表編輯器
+            </a>
+        </h2>
         <!-- 週一選取方塊 -->
         <div class="day-container" id="mon">
             <h3>週一</h3>
@@ -171,7 +175,9 @@
                 <input type="checkbox" id="mon-morning-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="mon-morning-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="mon-morning-C" value="詹雅嵐" checked> 詹雅嵐
-                <input type="checkbox" id="mon-morning-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="mon-morning-D" value="陳進儒" checked> 陳進儒
+                <input type="checkbox" id="mon-morning-custom-checkbox" value="">
+                <input type="text" id="mon-morning-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>午診</label>
@@ -179,6 +185,8 @@
                 <input type="checkbox" id="mon-afternoon-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="mon-afternoon-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="mon-afternoon-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="mon-afternoon-custom-checkbox" value="">
+                <input type="text" id="mon-afternoon-custom" style="width: 55px;" value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>晚診</label>
@@ -186,6 +194,8 @@
                 <input type="checkbox" id="mon-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="mon-evening-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="mon-evening-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="mon-evening-custom-checkbox" value="">
+                <input type="text" id="mon-evening-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
         </div>
         <br>
@@ -198,13 +208,17 @@
                 <input type="checkbox" id="tue-morning-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="tue-morning-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="tue-morning-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="tue-morning-custom-checkbox" value="">
+                <input type="text" id="tue-morning-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>午診</label>
                 <input type="checkbox" id="tue-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="tue-afternoon-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="tue-afternoon-C" value="詹雅嵐" checked> 詹雅嵐
-                <input type="checkbox" id="tue-afternoon-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="tue-afternoon-D" value="陳進儒" checked> 陳進儒
+                <input type="checkbox" id="tue-afternoon-custom-checkbox" value="">
+                <input type="text" id="tue-afternoon-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>晚診</label>
@@ -212,6 +226,8 @@
                 <input type="checkbox" id="tue-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="tue-evening-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="tue-evening-D" value="陳進儒" checked> 陳進儒
+                <input type="checkbox" id="tue-evening-custom-checkbox" value="">
+                <input type="text" id="tue-evening-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
         </div>
         <br>
@@ -224,13 +240,17 @@
                 <input type="checkbox" id="wed-morning-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="wed-morning-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="wed-morning-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="wed-morning-custom-checkbox" value="">
+                <input type="text" id="wed-morning-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>午診</label>
                 <input type="checkbox" id="wed-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="wed-afternoon-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="wed-afternoon-C" value="詹雅嵐"> 詹雅嵐
-                <input type="checkbox" id="wed-afternoon-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="wed-afternoon-D" value="陳進儒" checked> 陳進儒
+                <input type="checkbox" id="wed-afternoon-custom-checkbox" value="">
+                <input type="text" id="wed-afternoon-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>晚診</label>
@@ -238,6 +258,8 @@
                 <input type="checkbox" id="wed-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="wed-evening-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="wed-evening-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="wed-evening-custom-checkbox" value="">
+                <input type="text" id="wed-evening-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
         </div>
         <br>
@@ -250,20 +272,26 @@
                 <input type="checkbox" id="thu-morning-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="thu-morning-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="thu-morning-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="thu-morning-custom-checkbox" value="">
+                <input type="text" id="thu-morning-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>午診</label>
                 <input type="checkbox" id="thu-afternoon-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="thu-afternoon-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="thu-afternoon-C" value="詹雅嵐"> 詹雅嵐
-                <input type="checkbox" id="thu-afternoon-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="thu-afternoon-D" value="陳進儒" checked> 陳進儒
+                <input type="checkbox" id="thu-afternoon-custom-checkbox" value="">
+                <input type="text" id="thu-afternoon-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>晚診</label>
                 <input type="checkbox" id="thu-evening-A" value="蔡俊榕"> 蔡俊榕
                 <input type="checkbox" id="thu-evening-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="thu-evening-C" value="詹雅嵐"> 詹雅嵐
-                <input type="checkbox" id="thu-evening-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="thu-evening-D" value="陳進儒" checked> 陳進儒
+                <input type="checkbox" id="thu-evening-custom-checkbox" value="">
+                <input type="text" id="thu-evening-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
         </div>
         <br>
@@ -275,7 +303,9 @@
                 <input type="checkbox" id="fri-morning-A" value="蔡俊榕"> 蔡俊榕 
                 <input type="checkbox" id="fri-morning-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="fri-morning-C" value="詹雅嵐"> 詹雅嵐
-                <input type="checkbox" id="fri-morning-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="fri-morning-D" value="陳進儒" checked> 陳進儒
+                <input type="checkbox" id="fri-morning-custom-checkbox" value="">
+                <input type="text" id="fri-morning-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>午診</label>
@@ -283,6 +313,8 @@
                 <input type="checkbox" id="fri-afternoon-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="fri-afternoon-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="fri-afternoon-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="fri-afternoon-custom-checkbox" value="">
+                <input type="text" id="fri-afternoon-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>晚診</label>
@@ -290,6 +322,8 @@
                 <input type="checkbox" id="fri-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="fri-evening-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="fri-evening-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="fri-evening-custom-checkbox" value="">
+                <input type="text" id="fri-evening-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
         </div>
         <br>
@@ -302,6 +336,8 @@
                 <input type="checkbox" id="sat-morning-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="sat-morning-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sat-morning-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="sat-morning-custom-checkbox" value="">
+                <input type="text" id="sat-morning-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>午診</label>
@@ -309,6 +345,8 @@
                 <input type="checkbox" id="sat-afternoon-B" value="陳思倫" checked> 陳思倫
                 <input type="checkbox" id="sat-afternoon-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sat-afternoon-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="sat-afternoon-custom-checkbox" value="">
+                <input type="text" id="sat-afternoon-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>晚診</label>
@@ -316,6 +354,8 @@
                 <input type="checkbox" id="sat-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="sat-evening-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sat-evening-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="sat-evening-custom-checkbox" value="">
+                <input type="text" id="sat-evening-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
         </div>
         <br>
@@ -328,6 +368,8 @@
                 <input type="checkbox" id="sun-morning-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="sun-morning-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sun-morning-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="sun-morning-custom-checkbox" value="">
+                <input type="text" id="sun-morning-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>午診</label>
@@ -335,6 +377,8 @@
                 <input type="checkbox" id="sun-afternoon-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="sun-afternoon-C" value="詹雅嵐"> 詹雅嵐
                 <input type="checkbox" id="sun-afternoon-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="sun-afternoon-custom-checkbox" value="">
+                <input type="text" id="sun-afternoon-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
             <div class="checkbox-group">
                 <label>晚診</label>
@@ -342,6 +386,8 @@
                 <input type="checkbox" id="sun-evening-B" value="陳思倫"> 陳思倫
                 <input type="checkbox" id="sun-evening-C" value="詹雅嵐" checked> 詹雅嵐
                 <input type="checkbox" id="sun-evening-D" value="陳進儒"> 陳進儒
+                <input type="checkbox" id="sun-evening-custom-checkbox" value="">
+                <input type="text" id="sun-evening-custom" style="width: 55px;"  value="" placeholder="支援醫師">
             </div>
         </div>
         <br>
@@ -358,12 +404,46 @@
     function generateSchedule() {
         const days = ["mon", "tue", "wed", "thu", "fri", "sat", "sun"];
         const times = ["morning", "afternoon", "evening"];
-
+        /*
+        days.forEach(day => {
+            times.forEach(time => {
+                const checkboxes = document.querySelectorAll(`#${day}-${time}-A, #${day}-${time}-B, #${day}-${time}-C, #${day}-${time}-D, #${day}-${time}-custom-checkbox`);
+                const selectedText = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value).join("\n");
+                document.getElementById(`${day}-${time}`).innerText = selectedText;
+            });
+        });
+        */
         days.forEach(day => {
             times.forEach(time => {
                 const checkboxes = document.querySelectorAll(`#${day}-${time}-A, #${day}-${time}-B, #${day}-${time}-C, #${day}-${time}-D`);
-                const selectedText = Array.from(checkboxes).filter(cb => cb.checked).map(cb => cb.value).join("\n");
-                document.getElementById(`${day}-${time}`).innerText = selectedText;
+                const customInput = document.getElementById(`${day}-${time}-custom`);
+                const customCheckbox = document.getElementById(`${day}-${time}-custom-checkbox`);
+                const displayElement = document.getElementById(`${day}-${time}`);
+
+                // 取得選取的醫師名稱
+                let selectedDoctors = Array.from(checkboxes)
+                    .filter(cb => cb.checked)
+                    .map(cb => cb.value);
+
+                // 檢查是否勾選了 "自訂醫師"
+                if (customCheckbox.checked && customInput.value.trim().length >= 2) {
+                    let customName = customInput.value.trim();
+
+                    // 🔹 兩個字 → 自動插入全形空白
+                    if (customName.length === 2) {
+                        customName = customName[0] + "\u3000" + customName[1];
+                    }
+
+                    // 🔹 限制最多 3 個字
+                    if (customName.length > 3) {
+                        customName = customName.slice(0, 3);
+                    }
+
+                    selectedDoctors.push(customName); // 加入支援醫師
+                }
+
+                // 顯示選取的醫師名稱（換行顯示）
+                displayElement.innerText = selectedDoctors.join("\n");
             });
         });
     }
@@ -372,7 +452,7 @@
         const container = document.getElementById("schedule-preview");
 
         // 暫時固定容器大小
-        container.style.width = "780px";
+        container.style.width = "780px"; // 假設圖片寬度為 800px
         container.style.height = "1314px";
 
         html2canvas(container, { 
@@ -404,7 +484,63 @@
         days.forEach(day => {
             times.forEach(time => {
                 const checkboxes = document.querySelectorAll(`#${day}-${time}-A, #${day}-${time}-B, #${day}-${time}-C, #${day}-${time}-D`);
+                const customInput = document.getElementById(`${day}-${time}-custom`);
+                const customCheckbox = document.getElementById(`${day}-${time}-custom-checkbox`);
 
+                // 初始狀態：未勾選時禁用自訂輸入框
+                customInput.disabled = true;
+                // 確保 checkbox 預設為空值
+                customCheckbox.value = "";
+
+                // 當 custom Checkbox 被點選時，先檢查該時段是否已滿2位
+                customCheckbox.addEventListener("change", function() {
+                    const checkedOptions = Array.from(checkboxes).filter(cb => cb.checked).length;
+
+                    if (this.checked) {
+                        if (checkedOptions >= 2) {
+                            alert("一個節次最多只能選擇兩位醫師！");
+                            this.checked = false;
+                            return;
+                        }
+                        customInput.disabled = false; // 啟用輸入框
+                        customInput.focus(); // 自動聚焦輸入框
+                    } else {
+                        customInput.disabled = true; // 取消勾選時，禁用輸入框
+                        customInput.value = "";     // 清空輸入內容
+                        customCheckbox.value = "";  // 確保 checkbox 預設為空值
+                    }
+                    generateSchedule(); // 更新顯示
+                });
+
+                // 監聽輸入框輸入變化
+                function updateCustomInput() {
+                    let name = customInput.value.trim(); // 去除空白
+                    if (name.length > 3) {
+                        alert("姓名最多只能輸入2-3個字！");
+                        customInput.value = name.slice(0, 3); // 截斷成 3 個字
+                    }
+
+                    if (customInput.value.length < 2) {
+                        customCheckbox.value = "";
+                        customCheckbox.checked = false; // 取消勾選
+                    } else if (customInput.value.length >= 2 && customInput.value.length <= 3) {
+                        customCheckbox.value = customInput.value; // 設定 checkbox 值
+                        customCheckbox.checked = true; // 自動勾選
+                    }
+                    generateSchedule();
+                }
+
+                customInput.addEventListener("compositionend", updateCustomInput);
+                customInput.addEventListener("input", function (e) {
+                    if (!e.isComposing) {
+                        updateCustomInput();
+                    }
+                });
+                customInput.addEventListener("paste", function () {
+                    setTimeout(updateCustomInput, 0); // 確保貼上後內容已更新
+                });
+
+                
                 checkboxes.forEach(checkbox => {
                     checkbox.addEventListener("change", function() {
                         const checkedOptions = Array.from(checkboxes).filter(cb => cb.checked);
@@ -431,7 +567,19 @@
         // 重設每個 checkbox 的選取狀態
         checkboxes.forEach(checkbox => {
             checkbox.checked = checkbox.defaultChecked; // 回到原始的 checked 狀態
+            if (checkbox.id.includes("custom-checkbox")) {
+                checkbox.value = ""; // 清空 custom checkbox 的值
+            }
         });
+
+        // 取得所有 input 元素
+        const inputs = document.querySelectorAll("input[type='text']");
+        // 清空每個 input
+        inputs.forEach(input => {
+            input.value = "";
+            input.disabled = true; // 讓所有 custom input 也恢復禁用
+        });
+
         // 重設後自動更新顯示
         generateSchedule();
     }
@@ -441,8 +589,19 @@
         const checkboxes = document.querySelectorAll("input[type='checkbox']");
         checkboxes.forEach(checkbox => {
             checkbox.checked = false; // 將所有 checkbox 設置為未選中
+            if (checkbox.id.includes("custom-checkbox")) {
+                checkbox.value = ""; // 清空 custom checkbox 的值
+            }
         });
-        generateSchedule(); // 更新顯示
+
+        const inputs = document.querySelectorAll("input[type='text']");
+        inputs.forEach(input => {
+            input.value = "";
+            input.disabled = true; // 讓所有 custom input 也恢復禁用
+        });
+
+        // 重設後自動更新顯示
+        generateSchedule();
     }
 
 </script>
