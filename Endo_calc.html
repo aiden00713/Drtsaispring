@@ -14,16 +14,38 @@
             var today = new Date().toISOString().split('T')[0];
             document.getElementById('date_M0').value = today;});
 
-            function makeChange() {
-                tablestyle = document.getElementById("infotable1");
-                if(tablestyle.style.display === 'none'){
-                    tablestyle.style.display = '';
-                }else{
-                    tablestyle.style.display = 'none';
+            function makeChange1() {
+                tablestyle1 = document.getElementById("infotable1");
+                tablestyle2 = document.getElementById("infotable2");
+
+                // 使用 getComputedStyle 正確判斷是否真的顯示
+                const isVisible = window.getComputedStyle(tablestyle1).display !== "none";
+
+                if (!isVisible) {
+                    // 顯示 tablestyle1，隱藏 tablestyle2
+                    tablestyle1.style.display = '';
+                    tablestyle2.style.display = 'none';
+                } else {
+                    // 再點一次就隱藏 tablestyle1
+                    tablestyle1.style.display = 'none';
                 }
             }
 
             function makeChange2() {
+                tablestyle1 = document.getElementById("infotable1");
+                tablestyle2 = document.getElementById("infotable2");
+
+                const isVisible = window.getComputedStyle(tablestyle2).display !== "none";
+
+                if (!isVisible) {
+                    tablestyle2.style.display = '';
+                    tablestyle1.style.display = 'none';
+                } else {
+                    tablestyle2.style.display = 'none';
+                }
+            }
+
+            function makeChange_divtarget() {
                 divstyle = document.getElementById("div_target");
                 if(divstyle.style.display === 'none'){
                     divstyle.style.display = '';
@@ -48,6 +70,21 @@
             }
 
             var message = "";
+
+            function CE_0(){
+                birthyear = document.getElementById("birthyear").value;
+                const currentYear = new Date().getFullYear();
+                const visitYearTWN = currentYear - 1911; // 轉為民國年
+
+                const age = visitYearTWN - birthyear;
+
+                if (age >= 20 && age <= 70) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
 
             function CE_1(){
                 //判斷腰圍，男性大於等於90公分、女性大於等於80公分
@@ -82,36 +119,28 @@
                 //判斷血壓，收縮壓大於等於130mmHg或舒張壓大於等於85mmHg，或降血壓藥物為有
                 SBP = document.getElementById("SBP").value;
                 DBP = document.getElementById("DBP").value;
-                drug = document.getElementById("Anti-hypertensives").value;
 
                 if (SBP >= 130){ message += "(2)收縮壓大於等於130mmHg\n";  return true; }
                 if (DBP >= 85){ message += "(2)舒張壓大於等於85mmHg\n";  return true; }
-                if (drug == "true"){ message += "(2)降血壓藥物\n";  return true; }
             }
 
             function CE_3(){
                 //判斷飯前血糖值大於等於100mg/dL，或降血糖藥物為有
                 GLUAC = document.getElementById("GLU-AC").value;
-                drug = document.getElementById("Anti-hypoglycemic").value;
-
                 if (GLUAC >= 100){ message += "(3)飯前血糖值大於等於100mg/dL\n";  return true; }
-                if (drug == "true"){ message += "(3)降血糖藥物\n"; return true; }
             }
 
             function CE_4(){
                 //判斷三酸甘油脂大於等於150mg/dL，或降血脂藥物為有
                 TG = document.getElementById("TG").value;
-                drug = document.getElementById("Anti-hypolipidemi").value;
 
                 if (TG >= 150){ message += "(4)三酸甘油脂大於等於150mg/dL\n";  return true; }
-                if (drug == "true"){ message += "(4)降血脂藥物\n";  return true; }
             }
 
             function CE_5(){
                 //判斷高密度膽固醇：男性小於40mg/dL、女性小於50mg/dL，或降血脂藥物為有
                 gender = document.getElementById("gender").value;
                 HDL = document.getElementById("HDL").value;
-                drug = document.getElementById("Anti-hypolipidemi").value;
                 //console.log(HDL);
                 if (gender == "male"){
                     if (HDL < 40){
@@ -125,8 +154,6 @@
                         return true;
                     }
                 }
-
-                if (drug == "true"){ message += "(5)降血脂藥物\n";  return true; }
             }
 
             function CE_6(){
@@ -141,22 +168,23 @@
 
             function CE_total(){
                 var cal_total = 0;
+                if(CE_0()){
+                    if(CE_1()){ cal_total += 1; console.log("CE_1");}
+                    if(CE_2()){ cal_total += 1; console.log("CE_2");}
+                    if(CE_3()){ cal_total += 1; console.log("CE_3");}
+                    if(CE_4()){ cal_total += 1; console.log("CE_4");}
+                    if(CE_5()){ cal_total += 1; console.log("CE_5");}
 
-                if(CE_1()){ cal_total += 1; console.log("CE_1");}
-                if(CE_2()){ cal_total += 1; console.log("CE_2");}
-                if(CE_3()){ cal_total += 1; console.log("CE_3");}
-                if(CE_4()){ cal_total += 1; console.log("CE_4");}
-                if(CE_5()){ cal_total += 1; console.log("CE_5");}
-
-                if(cal_total >= 3){
-                    alert("符合收案條件：符合代謝症候群指標共" + cal_total +"項\n" + message);
-                    //document.getElementById("output").innerHTML = "";
-                    //document.getElementById("output").innerHTML = message;
-                }else if(CE_6()){
-                    alert("符合收案條件：糖尿病前期定義\n" + message);
-                }
-                else{
-                    alert("不符合收案條件！\n" + message);
+                    if(cal_total >= 3){
+                        alert("符合收案條件：符合代謝症候群指標共" + cal_total +"項\n" + message);
+                    }else if(CE_6()){
+                        alert("符合收案條件：糖尿病前期定義\n" + message);
+                    }
+                    else{
+                        alert("不符合收案條件！\n" + message);
+                    }
+                }else{
+                    alert("不符合收案條件！\n" + "(0)年齡不符合收案條件");
                 }
                 message = "";
             }
@@ -266,7 +294,7 @@
             }
 
             function target_cal(){
-                makeChange2();
+                makeChange_divtarget();
                 waistline_target();
                 weight_target();
                 GLUAC_target();
@@ -330,10 +358,11 @@
                 <div class="col-12"> 
                     <p class="h3 text-center"><b><a onclick="reLoad()">代謝症候群防治計畫收案條件試算</a></b></p>
                     <hr>
-                    <button type="button" class="btn btn-light btn-sm" onclick="makeChange()"><b>收案條件</b></button>
+                    <button type="button" class="btn btn-light btn-sm" onclick="makeChange1()"><b>收案條件</b></button>
+                    <button type="button" class="btn btn-light btn-sm" onclick="makeChange2()"><b>更新紀錄</b></button>
                     <table class="table   table-hover table-sm" id="infotable1" name="infotable1" style="font-size:1em; display:'';">
                         <tr>
-                            <td>0.收案須為20歲至64歲！</td>
+                            <td>0.收案須為20歲至69歲！計算方式：20 &le; 出生年 - 就醫年 &le; 70</td>
                         </tr>
                         <tr>
                             <td>1.符合下列代謝症候群指標三項：</td>
@@ -342,21 +371,36 @@
                             <td>&emsp;(1)腰圍：男性&ge;90公分、女性&ge;80公分或BMI&ge;27。</td>
                         </tr>
                         <tr>
-                            <td>&emsp;(2)收縮壓&ge;130mmHg或舒張壓&ge;85mmHg，或降血壓藥物為有。</td>
+                            <td>&emsp;(2)血壓值：收縮壓&ge;130mmHg 或舒張壓&ge;85mmHg。</td>
                         </tr>
                         <tr>
-                            <td>&emsp;(3)飯前血糖值&ge;100mg/dL，或降血糖藥物為有。</td>
+                            <td>&emsp;(3)飯前血糖值：&ge;100mg/dL。</td>
                         </tr>
                         <tr>
-                            <td>&emsp;(4)三酸甘油脂&ge;150mg/dL，或降血脂藥物為有。</td>
+                            <td>&emsp;(4)三酸甘油脂：&ge;150mg/dL。</td>
                         </tr>
                         <tr>
-                            <td>&emsp;(5)高密度膽固醇：男性&lt;40mg/dL、女性&lt;50mg/dL，或降血脂藥物為有。</td>
+                            <td>&emsp;(5)高密度膽固醇：男性&lt;40mg/dL、女性&lt;50mg/dL。</td>
                         </tr>
                         <tr>
-                            <td>2.符合糖尿病前期定義：糖化血色素：5.7~6.4%</td>
+                            <td>2.符合糖尿病前期定義：醣化血色素：5.7%~6.4%</td>
                         </tr>
                     </table>
+                    <table class="table   table-hover table-sm" id="infotable2" name="infotable2" style="font-size:1em; display:none;">
+                        <tr>
+                            <td>2025.04.15版本更新</td>
+                        </tr>
+                        <tr>
+                            <td>1.自民國114年起收案條件年齡上修至69歲，刪除服用藥物收案條件。</td>
+                        </tr>
+                        <tr>
+                            <td>2.新增收案年紀試算欄位，刪除各項服用藥物選項。</td>
+                        </tr>
+                    </table>
+
+
+
+
 
                     <form id="myForm" class="p-2 border border-light rounded bg-light" onsubmit="CE_total()"> <!-- Call JavaScript function "handleFormSubmit" -->
                 
@@ -370,6 +414,10 @@
                             </select>
                         </div>
                         <div class="form-group col-md-2">
+                            <label for="birthyear">民國出生年</label>
+                            <input type="number" class="form-control" min="0" id="birthyear" name="birthyear" autocomplete="off">
+                        </div>
+                        <div class="form-group col-md-2">
                             <label for="height" style="color:red;">身高 (cm)</label>
                             <input type="number" class="form-control" min="0" id="height" name="height" autocomplete="off" required onchange="cal_BMI()">
                         </div>
@@ -381,13 +429,13 @@
                             <label for="BMI">BMI (kg/m2)</label>
                             <input type="number" class="form-control" min="0" id="BMI" name="BMI" disabled="disabled">
                         </div>
+                    </div>
+
+                    <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="waistline" style="color:red;">腰圍 (cm)</label>
                             <input type="number" class="form-control" min="0" id="waistline" name="waistline" autocomplete="off" required>
                         </div>
-                    </div>
-
-                    <div class="form-row">
                         <div class="form-group col-md-2">
                             <label for="SBP" style="color:red;">收縮壓 (mmHg)</label>
                             <input type="number" class="form-control" min="0" id="SBP" name="SBP" autocomplete="off" required>
@@ -397,23 +445,12 @@
                             <input type="number" class="form-control" min="0" id="DBP" name="DBP" autocomplete="off" required>
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="Anti-hypertensives" style="color:red;">降血壓藥物</label>
-                            <select class="form-control" id="Anti-hypertensives" name="Anti-hypertensives" required>
-                                <option value="true">有</option>
-                                <option value="false" selected="selected">無</option>
-                            </select>
-
-                        </div>
-                        <div class="form-group col-md-2">
                             <label for="GLU-AC">飯前血糖值 (mg/dl)</label>
                             <input type="number" class="form-control" min="0" id="GLU-AC" name="GLU-AC" autocomplete="off">
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="Anti-hypoglycemic" style="color:red;">降血糖藥物</label>
-                            <select class="form-control" id="Anti-hypoglycemic" name="Anti-hypoglycemic" required>
-                                <option value="true">有</option>
-                                <option value="false" selected="selected">無</option>
-                            </select>
+                            <label for="HbA1c">醣化血色素 (%)</label>
+                            <input type="number" class="form-control" min="0" step="0.01" id="HbA1c" name="HbA1c" autocomplete="off">
                         </div>
                     </div>
 
@@ -422,14 +459,6 @@
                             <label for="TG">三酸甘油脂 (mg/dl)</label>
                             <input type="number" class="form-control" min="0" id="TG" name="TG" autocomplete="off" onchange="cal_HDL()">
                         </div>
-                        <div class="form-group col-md-2">
-                            <label for="Anti-hypolipidemi" style="color:red;">降血脂藥物</label>
-                            <select class="form-control" id="Anti-hypolipidemi" name="Anti-hypolipidemi" required>
-                                <option value="true">有</option>
-                                <option value="false" selected="selected">無</option>
-                            </select>
-                        </div>
-
                         <div class="form-group col-md-2">
                             <label for="TC">總膽固醇 (mg/dl)</label>
                             <input type="number" class="form-control" min="0" id="TC" name="TC" autocomplete="off" onchange="cal_HDL()">
@@ -441,10 +470,6 @@
                         <div class="form-group col-md-2">
                             <label for="HDL">高密度膽固醇 (mg/dl)</label>
                             <input type="number" class="form-control" id="HDL" name="HDL" autocomplete="off" disabled="disabled">
-                        </div>
-                        <div class="form-group col-md-2">
-                            <label for="HbA1c">糖化血色素 (%)</label>
-                            <input type="number" class="form-control" min="0" step="0.01" id="HbA1c" name="HbA1c" autocomplete="off">
                         </div>
                     </div>
                     <div class="form-row">
@@ -503,7 +528,7 @@
                             <input type="number" class="form-control" min="0" id="HDL_target" name="HDL_target" autocomplete="off">
                         </div>
                         <div class="form-group col-md-2">
-                            <label for="HbA1c_target">糖化血色素<br>(%)</label>
+                            <label for="HbA1c_target">醣化血色素<br>(%)</label>
                             <input type="number" class="form-control" min="0" step="0.01" id="HbA1c_target" name="HbA1c_target" autocomplete="off">
                         </div>
                     </div>
